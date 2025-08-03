@@ -1,6 +1,6 @@
 
 
-OpenVent - Tier Based Events
+OpenVent - Tier Based Events ||  Live: https://openvent.vercel.app/
 
 # 🚀 Setup Instructions
 
@@ -11,7 +11,7 @@ OpenVent - Tier Based Events
    cd your-repo
 
    npm install
-# or
+   # or
    yarn install
 
 Then, run the development server:
