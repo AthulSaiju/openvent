@@ -50,7 +50,6 @@ export default async function EventsPage() {
   const userRank = tierRanks[userTier];
   const allTiers: Tier[] = ['free', 'silver', 'gold', 'platinum'];
 
-  // New: Determine available upgrades
   const availableUpgrades = allTiers.filter(
     tier => tierRanks[tier] > tierRanks[userTier]
   );
@@ -64,8 +63,7 @@ export default async function EventsPage() {
 
   return (
     <main className="p-8 space-y-12">
-      {/* Add upgrade button at the top */}
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-[5vh]">
         <TierUpgradeButton 
           currentTier={userTier} 
           availableUpgrades={availableUpgrades} 

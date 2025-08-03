@@ -4,6 +4,11 @@
 
 @layer components {
    .navbar {
-    @apply  fixed top-0 z-50 flex bg-green-500 items-center justify-between mx-auto w-full px-14 py-4  max-sm:px-4;
+    @apply  fixed top-0 z-50 flex items-center justify-between mx-auto w-full px-14 py-4  max-sm:px-4;
   }
+}
+
+body{
+  background-color: #fefefe;
+  
 }

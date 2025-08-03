@@ -30,12 +30,10 @@ export default function TierUpgradeButton({
   const [isOpen, setIsOpen] = useState(false);
   const [isUpgrading, setIsUpgrading] = useState(false);
   
-  // Safely determine available upgrades
   const upgrades = upgradeTier 
     ? [upgradeTier] 
     : availableUpgrades || [];
   
-  // Check if upgrades are available
   const hasUpgrades = upgrades.length > 0;
 
   const handleUpgrade = async (newTier: string) => {
@@ -48,7 +46,7 @@ export default function TierUpgradeButton({
           tier: newTier 
         }
       });
-      setTimeout(() => window.location.reload(), 1000);
+      setTimeout(() => window.location.reload(), 3000);
     } catch (error) {
       console.error('Tier upgrade failed:', error);
       alert('Upgrade failed. Please try again.');
@@ -57,7 +55,6 @@ export default function TierUpgradeButton({
     }
   };
 
-  // Don't render if no upgrades available (for top-level button)
   if (!upgradeTier && !hasUpgrades) return null;
 
   return (
@@ -137,7 +134,7 @@ export default function TierUpgradeButton({
             )}
             
             <div className="mt-6 text-center text-sm text-gray-500">
-              This is a simulation. No real payment required.
+              Get more events by upgrading your Tier.
             </div>
           </div>
         </div>
