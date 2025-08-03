@@ -2,6 +2,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { createSupabaseClient } from "@/lib/supabase";
 import Section from "@/components/Section";
+import TierUpgradeButton from "@/components/TierUpgradeButton"; // New component
 import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 export const runtime = "edge";
@@ -28,11 +29,11 @@ export default async function EventsPage() {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
 
-  const userTier = (user.publicMetadata?.tier as Tier) ?? 'free'; // fallback to free
+  const userTier = (user.unsafeMetadata?.tier as Tier) ?? 'free';
 
   const supabase = createSupabaseClient();
  
-const { data, error }: PostgrestSingleResponse<Event[]> = await supabase
+  const { data, error }: PostgrestSingleResponse<Event[]> = await supabase
     .from("events")
     .select("*")
     .order("event_date", { ascending: true });
@@ -47,9 +48,12 @@ const { data, error }: PostgrestSingleResponse<Event[]> = await supabase
   }
 
   const userRank = tierRanks[userTier];
-
-  // Filter and group events by tier
   const allTiers: Tier[] = ['free', 'silver', 'gold', 'platinum'];
+
+  // New: Determine available upgrades
+  const availableUpgrades = allTiers.filter(
+    tier => tierRanks[tier] > tierRanks[userTier]
+  );
 
   const grouped = allTiers.map((tier) => {
     const rank = tierRanks[tier];
@@ -60,6 +64,14 @@ const { data, error }: PostgrestSingleResponse<Event[]> = await supabase
 
   return (
     <main className="p-8 space-y-12">
+      {/* Add upgrade button at the top */}
+      <div className="flex justify-end">
+        <TierUpgradeButton 
+          currentTier={userTier} 
+          availableUpgrades={availableUpgrades} 
+        />
+      </div>
+      
       {grouped.map(({ tier, events, visible }) => (
         <Section
           key={tier}

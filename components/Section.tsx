@@ -2,6 +2,7 @@
 'use client';
 
 import React from 'react';
+import TierUpgradeButton from './TierUpgradeButton'; // Import the new button
 
 export type Event = {
   id: string;
@@ -20,8 +21,13 @@ interface SectionProps {
 
 export default function Section({ tier, events = [], locked = false }: SectionProps) {
   return (
-    <section className="mb-12">
-      <h2 className="text-2xl font-bold mb-4">{tier.toUpperCase()}</h2>
+    <section className="mb-12 bg-red-500">
+      <div className="flex items-center justify-between mb-4 bg-blue-500">
+        <h2 className="text-2xl font-bold">{tier.toUpperCase()}</h2>
+        
+        {/* Add upgrade button in locked sections */}
+        {locked && <TierUpgradeButton upgradeTier={tier} />}
+      </div>
 
       {locked ? (
         <div className="p-6 bg-gray-100 text-center rounded-md text-gray-600 border border-dashed">
