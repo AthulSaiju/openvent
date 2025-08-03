@@ -46,7 +46,6 @@ export default function Section({ tier, events = [], locked = false }: SectionPr
                 key={e.id}
                 className="bg-[#ffffff] rounded-2xl shadow-md overflow-hidden flex flex-col"
               >
-                {/* Image */}
                 <div className="h-48 w-full relative">
                   <img
                     src={e.image_url}
